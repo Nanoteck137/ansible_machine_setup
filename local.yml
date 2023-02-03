@@ -49,5 +49,5 @@
     - name: Unpack NVIM
       unarchive:
         src: "{{ download_nvim.dest }}"
-        dest: "{{ ansible_env.HOME }}/opt/test"
+        dest: "{{ ansible_env.HOME }}/opt"
       when: download_nvim.changed == true
