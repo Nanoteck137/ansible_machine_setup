@@ -23,3 +23,8 @@
         state: present
       become: yes
       when: ansible_distribution == "Ubuntu"
+
+    - name: Test stow
+      shell: "stow i3 -d {{ ansible_env.HOME }}/dotfiles --target {{ ansible_env.HOME }} --verbose=2"
+      register: result
+      changed_when: 'result.stderr is search("LINK: ")'
