@@ -23,15 +23,20 @@
       become: yes
       when: ansible_distribution == "Ubuntu"
 
-    - name: Create all the directories needed
+    - name: Create directories
       loop:
         - "{{ ansible_env.HOME }}/.config"
-        - "{{ ansible_env.HOME }}/test"
+        - "{{ ansible_env.HOME }}/opt"
       ansible.builtin.file:
         path: "{{ item }}"
         state: directory
 
-    - name: Test stow
+    - name: Stow i3 Config
       shell: "stow i3 -d {{ ansible_env.HOME }}/dotfiles --target {{ ansible_env.HOME }} --verbose=2"
+      register: result
+      changed_when: 'result.stderr is search("LINK: ")'
+
+    - name: Stow Neovim config
+      shell: "stow nvim -d {{ ansible_env.HOME }}/dotfiles --target {{ ansible_env.HOME }} --verbose=2"
       register: result
       changed_when: 'result.stderr is search("LINK: ")'
