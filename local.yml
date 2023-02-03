@@ -12,12 +12,14 @@
 
   tasks:
     - name: Install base packages (apt)
+      loop:
+        - build-essential
+        - git
+        - curl
+        - unzip
+        - tar
       apt:
-        name:
-          - build-essential
-          - git
-          - curl
-          - unzip
+        name: "{{ item }}"
         state: present
       become: yes
       when: ansible_distribution == "Ubuntu"
