@@ -23,9 +23,12 @@
       become: yes
       when: ansible_distribution == "Ubuntu"
 
-    - name: Create a directory if it does not exist
+    - name: Create all the directories needed
+      loop:
+        - "{{ ansible_env.HOME }}/.config"
+        - "{{ ansible_env.HOME }}/test"
       ansible.builtin.file:
-        path: "{{ ansible_env.HOME }}/.config"
+        path: "{{ item }}"
         state: directory
 
     - name: Test stow
