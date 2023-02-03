@@ -44,3 +44,8 @@
         url: https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz
         dest: "{{ ansible_env.HOME }}/opt"
         checksum: sha256:https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz.sha256sum
+      register: download_nvim
+
+    - name: Debug
+      debug:
+        var: download_nvim
