@@ -38,3 +38,9 @@
       shell: "stow {{ item }} -d {{ ansible_env.HOME }}/dotfiles --target {{ ansible_env.HOME }} --verbose=2"
       register: result
       changed_when: 'result.stderr is search("LINK: ")'
+
+    - name: Download NVIM
+      ansible.builtin.get_url:
+        url: https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz
+        dest: {{ ansible_env.HOME }}/opt
+        checksum: sha256:https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz.sha256sum
