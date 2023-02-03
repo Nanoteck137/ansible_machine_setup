@@ -11,6 +11,13 @@
       when: ansible_distribution == "Ubuntu"
 
   tasks:
-    - name: Install htop
+    - name: Install base packages (apt)
       apt:
-        name: htop
+        name:
+          - build-essential
+          - git
+          - curl
+          - unzip
+        state: present
+      become: yes
+      when: ansible_distribution == "Ubuntu"
