@@ -3,7 +3,6 @@
 
   pre_tasks:
     - name: Update system (apt)
-      become: yes
       apt:
         update_cache: yes
         upgrade: yes
@@ -23,6 +22,11 @@
         state: present
       become: yes
       when: ansible_distribution == "Ubuntu"
+
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: "{{ ansible_env.HOME }}/.config"
+        state: directory
 
     - name: Test stow
       shell: "stow i3 -d {{ ansible_env.HOME }}/dotfiles --target {{ ansible_env.HOME }} --verbose=2"
