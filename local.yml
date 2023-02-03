@@ -42,5 +42,5 @@
     - name: Download NVIM
       ansible.builtin.get_url:
         url: https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz
-        dest: {{ ansible_env.HOME }}/opt
+        dest: "{{ ansible_env.HOME }}/opt"
         checksum: sha256:https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz.sha256sum
