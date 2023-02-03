@@ -49,3 +49,4 @@
     - name: Debug
       debug:
         var: download_nvim
+      when: download_nvim.changed == true
