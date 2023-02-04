@@ -120,7 +120,6 @@
         marker: "# {mark} Ansible Marker"
         block: |
           export PATH=$PATH:{{ item }}
-          # {{ item.ip }} {{ item.name }}
       loop:
         - "{{ ansible_env.HOME }}/.cargo/bin"
         - "{{ download_nvim.dest }}/bin"
