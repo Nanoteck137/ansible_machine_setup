@@ -62,7 +62,7 @@
         creates: "$HOME/.oh-my-zsh"
 
     - name: Set login shell of user {{ ansible_env.USER }} to `/bin/zsh` with `usermod`
-      command: usermod --shell /bin/zsh {{ ansible_env.USER }}
+      command: usermod --shell {{ which_zsh.stdout }} {{ ansible_env.USER }}
       become: true
       changed_when: false
 
