@@ -11,6 +11,13 @@
       become: yes
       when: ansible_distribution == "Ubuntu"
 
+  - name: Update system (pacman)
+    pacman:
+      update_cache: yes
+      upgrade: yes
+    become: yes
+    when: ansible_distribution == "Archlinux"
+
   tasks:
     - name: Install base packages (apt)
       loop:
@@ -28,6 +35,22 @@
         state: present
       become: yes
       when: ansible_distribution == "Ubuntu"
+
+    - name: Install base packages (pacman)
+      loop:
+        - base-devel
+        - git
+        - curl
+        - tar
+        - stow
+        - ripgrep
+        - fd
+        - fzy
+      pacman:
+        name: "{{ item }}"
+        state: present
+      become: yes
+      when: ansible_distribution == "Archlinux"
 
     - name: Create directories
       loop:
