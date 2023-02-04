@@ -90,7 +90,12 @@
       unarchive:
         src: "{{ download_nvim.dest }}"
         dest: "{{ ansible_env.HOME }}/opt"
+      register: unpack_nvim
       when: download_nvim.changed == true
+
+    - name: Test
+      debug:
+        var: unpack_nvim
 
     - name: Fetch Rust installer
       ansible.builtin.uri:
@@ -103,14 +108,6 @@
         cmd: sh -s -- --default-toolchain nightly --no-modify-path -y
         stdin: "{{ rust_installer.content }}"
         creates: "{{ ansible_env.HOME }}/.cargo"
-
-    # - name: Test
-    #   blockinfile:
-    #     path: "{{ ansible_env.HOME }}/test.txt"
-    #     create: true
-    #     state: present
-    #     marker: "# {mark} Ansible Marker"
-    #     content: ""
 
     - name: Add paths to .zshenv
       ansible.builtin.blockinfile:
