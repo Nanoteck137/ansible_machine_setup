@@ -114,11 +114,11 @@
 
     - name: Add paths to .zshenv
       ansible.builtin.blockinfile:
-        path: "{{ ansible_env.HOME }}/test.txt"
+        path: "{{ ansible_env.HOME }}/.zshenv"
         state: present
-        marker: "# {mark} Ansible Marker {{ item.name }}"
+        marker: "# {mark} Ansible Marker for {{ item.name }}"
         block: |
           export PATH=$PATH:{{ item.path }}
       loop:
         - { name: cargo, path: "{{ ansible_env.HOME }}/.cargo/bin" }
-        - { name: nvim, path: "{{ download_nvim.dest }}/bin" }
+        # - { name: nvim, path: "{{ download_nvim.dest }}/bin" }
