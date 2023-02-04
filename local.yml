@@ -122,5 +122,5 @@
           export PATH=$PATH:{{ item }}
           # {{ item.ip }} {{ item.name }}
       loop:
-        - {{ ansible_env.HOME }}/.cargo/bin
-        - {{ download_nvim.dest }}/bin
+        - "{{ ansible_env.HOME }}/.cargo/bin"
+        - "{{ download_nvim.dest }}/bin"
