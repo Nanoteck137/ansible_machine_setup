@@ -68,11 +68,23 @@
       command: which zsh
       register: which_zsh
 
-    - name: Install "Oh my zsh"
-      shell:
-        cmd: 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc'
-        chdir: "$HOME"
-        creates: "$HOME/.oh-my-zsh"
+    - name: Fetch "Oh my zsh" installer
+      ansible.builtin.uri:
+        url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+        return_content: yes
+      register: ohmyzsh_installer
+
+    # - name: Install "Oh my zsh"
+    #   shell:
+    #     cmd: 'sh -c "" "" --unattended --keep-zshrc'
+    #     chdir: "$HOME"
+    #     creates: "$HOME/.oh-my-zsh"
+
+    - name: Run "Oh my zsh" installer
+      ansible.builtin.shell:
+        cmd: sh -s -- --unattended --keep-zshrc
+        stdin: "{{ ohmyzsh.content }}"
+        creates: "{{ ansible_env.HOME }}/.oh-my-zsh"
 
     - name: Set login shell of user {{ ansible_env.USER }} to `/bin/zsh` with `usermod`
       command: usermod --shell {{ which_zsh.stdout }} {{ ansible_env.USER }}
