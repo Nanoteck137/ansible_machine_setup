@@ -106,7 +106,7 @@
 
     - name: Test
       blockinfile:
-        creates: "{{ ansible_env.HOME }}/test.txt"
+        path: "{{ ansible_env.HOME }}/test.txt"
         marker: "# Test Marker"
         content: "Hello World"
         state: present
