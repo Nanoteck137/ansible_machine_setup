@@ -116,9 +116,9 @@
       ansible.builtin.blockinfile:
         path: "{{ ansible_env.HOME }}/test.txt"
         state: present
-        marker: "# {mark} Ansible Marker"
+        marker: "# {mark} Ansible Marker {{ item.name }}"
         block: |
-          export PATH=$PATH:{{ item }}
+          export PATH=$PATH:{{ item.path }}
       loop:
-        - "{{ ansible_env.HOME }}/.cargo/bin"
-        - "{{ download_nvim.dest }}/bin"
+        - { name: cargo, path: "{{ ansible_env.HOME }}/.cargo/bin" }
+        - { name: nvim, path: "{{ download_nvim.dest }}/bin" }
