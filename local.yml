@@ -74,12 +74,6 @@
         return_content: yes
       register: ohmyzsh_installer
 
-    # - name: Install "Oh my zsh"
-    #   shell:
-    #     cmd: 'sh -c "" "" --unattended --keep-zshrc'
-    #     chdir: "$HOME"
-    #     creates: "$HOME/.oh-my-zsh"
-
     - name: Run "Oh my zsh" installer
       ansible.builtin.shell:
         cmd: sh -s -- --unattended --keep-zshrc
