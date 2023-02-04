@@ -17,7 +17,6 @@
         - curl
         - unzip
         - tar
-        - zsh
       apt:
         name: "{{ item }}"
         state: present
@@ -39,6 +38,18 @@
       shell: "stow {{ item }} -d {{ ansible_env.HOME }}/dotfiles --target {{ ansible_env.HOME }} --verbose=2"
       register: result
       changed_when: 'result.stderr is search("LINK: ")'
+
+    - name: Install ZSH (apt)
+      apt:
+        name: zsh
+        state: present
+      become: yes
+      register: zsh_install
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Test
+      debug:
+        var: "{{ zsh_install }}"
 
     - name: Install "Oh my zsh"
       shell:
