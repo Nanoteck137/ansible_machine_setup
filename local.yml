@@ -1,12 +1,8 @@
 - hosts: localhost
   connection: local
 
-  # TODO(patrik): Update the .zshenv with nvim path
   # TODO(patrik): Download node and nim
   # TODO(patrik): Install packer
-  # TODO(patrik): Install ripgrep
-  # TODO(patrik): Install fd-find
-  # TODO(patrik): Install fzy
 
   pre_tasks:
     - name: Update system (apt)
@@ -64,10 +60,6 @@
       register: zsh_install
       when: ansible_distribution == "Ubuntu"
 
-    - name: Which ZSH
-      command: which zsh
-      register: which_zsh
-
     - name: Fetch "Oh my zsh" installer
       ansible.builtin.uri:
         url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
@@ -79,6 +71,11 @@
         cmd: sh -s -- --unattended --keep-zshrc
         stdin: "{{ ohmyzsh_installer.content }}"
         creates: "{{ ansible_env.HOME }}/.oh-my-zsh"
+
+    - name: Which ZSH
+      command: which zsh
+      register: which_zsh
+      changed_when: false
 
     - name: Set login shell of user {{ ansible_env.USER }} to `/bin/zsh` with `usermod`
       command: usermod --shell {{ which_zsh.stdout }} {{ ansible_env.USER }}
