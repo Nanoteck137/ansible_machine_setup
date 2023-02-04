@@ -104,10 +104,23 @@
         stdin: "{{ rust_installer.content }}"
         creates: "{{ ansible_env.HOME }}/.cargo"
 
-    - name: Test
-      blockinfile:
+    # - name: Test
+    #   blockinfile:
+    #     path: "{{ ansible_env.HOME }}/test.txt"
+    #     create: true
+    #     state: present
+    #     marker: "# {mark} Ansible Marker"
+    #     content: ""
+
+    - name: Add paths to .zshenv
+      ansible.builtin.blockinfile:
         path: "{{ ansible_env.HOME }}/test.txt"
         create: true
-        marker: "# Test Marker"
-        content: "Hello World"
         state: present
+        marker: "# {mark} Ansible Marker"
+        block: |
+          export PATH=$PATH:{{ item }}
+          # {{ item.ip }} {{ item.name }}
+      loop:
+        - {{ ansible_env.HOME }}/.cargo/bin
+        - {{ download_nvim.dest }}/bin
