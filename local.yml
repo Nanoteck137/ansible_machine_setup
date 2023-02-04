@@ -40,10 +40,16 @@
       register: result
       changed_when: 'result.stderr is search("LINK: ")'
 
-    # Add ZSH And oh my zsh
-    - name: Testing
-      debug:
-        var: "{{ ansible_env.USER }}"
+    - name: Install "Oh my zsh"
+      shell:
+        cmd: 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc'
+        chdir: "$HOME"
+        creates: "$HOME/.oh-my-zsh"
+
+    - name: Set login shell of user {{ ansible_env.USER }} to `/bin/zsh` with `usermod`
+      command: usermod --shell /bin/zsh {{ ansible_env.USER }}
+      become: true
+      changed_when: false
 
     - name: Download NVIM
       ansible.builtin.get_url:
