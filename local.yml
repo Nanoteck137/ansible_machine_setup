@@ -2,20 +2,11 @@
   connection: local
 
   # TODO(patrik): Update the .zshenv with nvim path
-  # TODO(patrik): Download rust and cargo
   # TODO(patrik): Download node and nim
   # TODO(patrik): Install packer
   # TODO(patrik): Install ripgrep
   # TODO(patrik): Install fd-find
   # TODO(patrik): Install fzy
-  # TODO(patrik):
-
-  # TODO(patrik): --default-host
-  # TODO(patrik): --default-toolchain nightly
-  # TODO(patrik): --default-profile
-  # TODO(patrik): --component
-  # TODO(patrik): --target
-  # curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain nightly --no-modify-path -y
 
   pre_tasks:
     - name: Update system (apt)
@@ -34,6 +25,9 @@
         - unzip
         - tar
         - stow
+        - ripgrep
+        - fd-find
+        - fzy
       apt:
         name: "{{ item }}"
         state: present
