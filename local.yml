@@ -1,6 +1,8 @@
 - hosts: localhost
   connection: local
 
+  # TODO(patrik): Clone dotfiles repo
+
   pre_tasks:
     - name: Update system (apt)
       apt:
@@ -17,6 +19,7 @@
         - curl
         - unzip
         - tar
+        - stow
       apt:
         name: "{{ item }}"
         state: present
@@ -31,10 +34,16 @@
         path: "{{ item }}"
         state: directory
 
+    - name: Checkout Dotfiles repo
+      ansible.builtin.git:
+        repo: "https://www.github.com/nanoteck137/dotfiles.git"
+        dest: "{{ ansible_env.HOME }}/dotfiles"
+
     - name: Stow Dotfiles
       loop:
         - nvim
         - i3
+        - zsh
       shell: "stow {{ item }} -d {{ ansible_env.HOME }}/dotfiles --target {{ ansible_env.HOME }} --verbose=2"
       register: result
       changed_when: 'result.stderr is search("LINK: ")'
@@ -50,10 +59,6 @@
     - name: Which ZSH
       command: which zsh
       register: which_zsh
-
-    - name: Test
-      debug:
-        var: which_zsh
 
     - name: Install "Oh my zsh"
       shell:
