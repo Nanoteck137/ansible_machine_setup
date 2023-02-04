@@ -103,3 +103,8 @@
         cmd: sh -s -- --default-toolchain nightly --no-modify-path -y
         stdin: "{{ rust_installer.content }}"
         creates: "{{ ansible_env.HOME }}/.cargo"
+
+    - name: Test
+      blockinfile:
+        marker: "# Test Marker"
+        content: "Hello World"
