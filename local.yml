@@ -1,8 +1,7 @@
 - hosts: localhost
   connection: local
 
-  # TODO(patrik): Download node and nim
-  # TODO(patrik): Install packer
+  # TODO(patrik): Download nim
 
   pre_tasks:
     - name: Update system (apt)
