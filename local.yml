@@ -1,7 +1,21 @@
 - hosts: localhost
   connection: local
 
-  # TODO(patrik): Clone dotfiles repo
+  # TODO(patrik): Update the .zshenv with nvim path
+  # TODO(patrik): Download rust and cargo
+  # TODO(patrik): Download node and nim
+  # TODO(patrik): Install packer
+  # TODO(patrik): Install ripgrep
+  # TODO(patrik): Install fd-find
+  # TODO(patrik): Install fzy
+  # TODO(patrik):
+
+  # TODO(patrik): --default-host
+  # TODO(patrik): --default-toolchain nightly
+  # TODO(patrik): --default-profile
+  # TODO(patrik): --component
+  # TODO(patrik): --target
+  # curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain nightly --no-modify-path -y
 
   pre_tasks:
     - name: Update system (apt)
@@ -83,3 +97,8 @@
         src: "{{ download_nvim.dest }}"
         dest: "{{ ansible_env.HOME }}/opt"
       when: download_nvim.changed == true
+
+    - name: Install "Rust"
+      shell:
+        cmd: "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain nightly --no-modify-path -y"
+        creates: "{{ ansible_env.HOME }}/.rustup"
