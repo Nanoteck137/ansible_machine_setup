@@ -47,9 +47,13 @@
       register: zsh_install
       when: ansible_distribution == "Ubuntu"
 
+    - name: Which ZSH
+      command: which zsh
+      register: which_zsh
+
     - name: Test
       debug:
-        var: zsh_install
+        var: which_zsh
 
     - name: Install "Oh my zsh"
       shell:
