@@ -123,3 +123,14 @@
       loop:
         - { name: cargo, path: "{{ ansible_env.HOME }}/.cargo/bin" }
         - { name: nvim, path: "{{ ansible_env.HOME }}/opt/nvim-linux64/bin" }
+
+    - name: Add .zshenv
+      ansible.builtin.blockinfile:
+        path: "{{ ansible_env.HOME }}/.zshenv"
+        state: present
+        marker: "# {mark} Ansible Marker for {{ item.name }}"
+        block: |
+          {{ item.content }}
+      loop:
+        - { name: nvm_export, content: 'export NVM_DIR="$HOME/.nvm"' }
+        - { name: nvm, content: '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' }
