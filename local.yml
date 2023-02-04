@@ -117,6 +117,7 @@
       ansible.builtin.blockinfile:
         path: "{{ ansible_env.HOME }}/.zshenv"
         state: present
+        creates: true
         marker: "# {mark} Ansible Marker for {{ item.name }}"
         block: |
           export PATH=$PATH:{{ item.path }}
@@ -128,6 +129,7 @@
       ansible.builtin.blockinfile:
         path: "{{ ansible_env.HOME }}/.zshenv"
         state: present
+        creates: true
         marker: "# {mark} Ansible Marker for nvm"
         block: |
           'export NVM_DIR="$HOME/.nvm'
