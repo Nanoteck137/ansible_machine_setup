@@ -92,7 +92,14 @@
         dest: "{{ ansible_env.HOME }}/opt"
       when: download_nvim.changed == true
 
-    - name: Install "Rust"
-      shell:
-        cmd: "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain nightly --no-modify-path -y"
+    - name: Fetch Rust installer
+      ansible.builtin.uri:
+        url: https://sh.rustup.rs
+        return_content: yes
+      register: rust_installer
+
+    - name: Run Rust installer
+      ansible.builtin.shell:
+        cmd: sh -s -- --default-toolchain nightly --no-modify-path -y
+        stdin: "{{ rust_installer.content }}"
         creates: "{{ ansible_env.HOME }}/.cargo"
