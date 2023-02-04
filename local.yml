@@ -49,7 +49,7 @@
 
     - name: Test
       debug:
-        var: "{{ zsh_install }}"
+        var: zsh_install
 
     - name: Install "Oh my zsh"
       shell:
