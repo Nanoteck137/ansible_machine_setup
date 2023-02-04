@@ -90,12 +90,7 @@
       unarchive:
         src: "{{ download_nvim.dest }}"
         dest: "{{ ansible_env.HOME }}/opt"
-      register: unpack_nvim
       when: download_nvim.changed == true
-
-    - name: Test
-      debug:
-        var: unpack_nvim
 
     - name: Fetch Rust installer
       ansible.builtin.uri:
@@ -118,4 +113,4 @@
           export PATH=$PATH:{{ item.path }}
       loop:
         - { name: cargo, path: "{{ ansible_env.HOME }}/.cargo/bin" }
-        # - { name: nvim, path: "{{ download_nvim.dest }}/bin" }
+        - { name: nvim, path: "{{ ansible_env.HOME }}/opt/nvim-linux64/bin" }
