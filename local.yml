@@ -17,6 +17,7 @@
         - curl
         - unzip
         - tar
+        - zsh
       apt:
         name: "{{ item }}"
         state: present
@@ -38,6 +39,11 @@
       shell: "stow {{ item }} -d {{ ansible_env.HOME }}/dotfiles --target {{ ansible_env.HOME }} --verbose=2"
       register: result
       changed_when: 'result.stderr is search("LINK: ")'
+
+    # Add ZSH And oh my zsh
+    - name: Testing
+      debug:
+        var: "{{ ansible_env.USER }}"
 
     - name: Download NVIM
       ansible.builtin.get_url:
