@@ -11,12 +11,12 @@
       become: yes
       when: ansible_distribution == "Ubuntu"
 
-  - name: Update system (pacman)
-    pacman:
-      update_cache: yes
-      upgrade: yes
-    become: yes
-    when: ansible_distribution == "Archlinux"
+    - name: Update system (pacman)
+      pacman:
+        update_cache: yes
+        upgrade: yes
+      become: yes
+      when: ansible_distribution == "Archlinux"
 
   tasks:
     - name: Install base packages (apt)
