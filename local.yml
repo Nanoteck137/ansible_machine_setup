@@ -1,8 +1,6 @@
 - hosts: localhost
   connection: local
 
-  # TODO(patrik): Download nim
-
   pre_tasks:
     - name: Update system (apt)
       apt:
