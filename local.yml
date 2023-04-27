@@ -112,6 +112,12 @@
         dest: "{{ ansible_env.HOME }}/.nvm"
         version: "v0.39.3"
 
+    - name: Install Tmux Package Manager (TPM)
+      ansible.builtin.git:
+        repo: "https://github.com/tmux-plugins/tpm.git"
+        dest: "{{ ansible_env.HOME }}/.local/share/tmux/tpm"
+        version: "v3.1.0"
+
     - name: Download NVIM
       ansible.builtin.get_url:
         url: https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz
