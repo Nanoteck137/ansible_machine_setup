@@ -21,6 +21,8 @@
       loop:
         - build-essential
         - git
+        - gh
+        - tmux
         - curl
         - unzip
         - tar
@@ -38,6 +40,8 @@
       loop:
         - base-devel
         - git
+        - github-cli
+        - tmux
         - curl
         - tar
         - stow
