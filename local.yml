@@ -72,6 +72,7 @@
         - nvim
         - i3
         - zsh
+        - tmux
       shell: "stow {{ item }} -d {{ ansible_env.HOME }}/dotfiles --target {{ ansible_env.HOME }} --verbose=2"
       register: result
       changed_when: 'result.stderr is search("LINK: ")'
